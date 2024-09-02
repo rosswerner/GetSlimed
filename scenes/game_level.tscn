@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://b4dcx8ompxlku"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy_spawner.gd" id="1_p7647"]
+[ext_resource type="PackedScene" uid="uid://dk84rhdogwg2j" path="res://scenes/characters/slime_character.tscn" id="1_u4ltj"]
+[ext_resource type="Script" path="res://scenes/layers.gd" id="2_dwrlo"]
+[ext_resource type="PackedScene" uid="uid://bxh2ctf0htioa" path="res://scenes/test_base_layer.tscn" id="2_oy2iv"]
+[ext_resource type="PackedScene" uid="uid://bnovo4dummyvg" path="res://scenes/enemies/baby_slime.tscn" id="4_qyr7a"]
+[ext_resource type="PackedScene" uid="uid://bcql7tuubulva" path="res://scenes/enemies/enemy_spawner.tscn" id="6_ydg56"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpcnw"]
+size = Vector2(2005, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ti0m"]
+size = Vector2(112, 1008)
+
+[node name="GameLevel" type="Node2D"]
+y_sort_enabled = true
+position = Vector2(440, 305)
+script = ExtResource("1_p7647")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(-333, -235)
+limit_left = 0
+limit_top = 0
+limit_right = 2000
+limit_bottom = 1000
+editor_draw_limits = true
+
+[node name="Layers" type="Node" parent="."]
+script = ExtResource("2_dwrlo")
+
+[node name="TestBaseLayer" parent="Layers" instance=ExtResource("2_oy2iv")]
+script = ExtResource("2_dwrlo")
+
+[node name="Actors" type="Node2D" parent="."]
+visibility_layer = 524288
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-440, -305)
+
+[node name="EnemyActors" type="Node2D" parent="Actors"]
+position = Vector2(292, 177)
+
+[node name="BabySlime" parent="Actors/EnemyActors" groups=["Monster"] instance=ExtResource("4_qyr7a")]
+
+[node name="SlimeCharacter" parent="Actors" instance=ExtResource("1_u4ltj")]
+position = Vector2(107, 70)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Actors/SlimeCharacter"]
+z_index = 1
+y_sort_enabled = true
+remote_path = NodePath("../../../Camera2D")
+
+[node name="EnemySpawner" parent="." groups=["Monster"] instance=ExtResource("6_ydg56")]
+top_level = true
+y_sort_enabled = true
+position = Vector2(202, 156)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(565.5, -331)
+shape = SubResource("RectangleShape2D_gpcnw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(547, 721)
+shape = SubResource("RectangleShape2D_gpcnw")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-488, 197)
+shape = SubResource("RectangleShape2D_5ti0m")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1628, 189)
+shape = SubResource("RectangleShape2D_5ti0m")

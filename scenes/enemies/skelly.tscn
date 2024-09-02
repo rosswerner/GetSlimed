@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://b56k6q47wqisw"]
+
+[ext_resource type="Script" path="res://scenes/enemies/baby_slime.gd" id="1_tjnqk"]
+[ext_resource type="Texture2D" uid="uid://gx8j5vexegyx" path="res://assets/sprites/characters/player.png" id="2_cfhyr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g5aqc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bb4wn"]
+radius = 132.0
+
+[node name="Skelly" type="CharacterBody2D"]
+top_level = true
+motion_mode = 1
+platform_floor_layers = 4294967280
+script = ExtResource("1_tjnqk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cfhyr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_g5aqc")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" groups=["Monster"]]
+shape = SubResource("CircleShape2D_bb4wn")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]

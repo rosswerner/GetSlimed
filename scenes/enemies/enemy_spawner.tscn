@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bcql7tuubulva"]
+
+[ext_resource type="Script" path="res://scenes/enemies/enemy_spawner.gd" id="1_7fj1s"]
+[ext_resource type="Script" path="res://scenes/enemies/spawn_info.gd" id="2_c4ppu"]
+[ext_resource type="PackedScene" uid="uid://bnovo4dummyvg" path="res://scenes/enemies/baby_slime.tscn" id="3_ccwkn"]
+
+[sub_resource type="Resource" id="Resource_6pyk2"]
+script = ExtResource("2_c4ppu")
+time_start = 0
+time_end = 60
+enemy = ExtResource("3_ccwkn")
+enemy_num = 1
+enemy_spawn_delay = 1
+
+[node name="EnemySpawner" type="Node2D"]
+script = ExtResource("1_7fj1s")
+spawns = Array[ExtResource("2_c4ppu")]([SubResource("Resource_6pyk2")])
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
