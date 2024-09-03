@@ -46,7 +46,7 @@ func _physics_process(_delta):
 				move_and_slide()
 			Swordsman_State["AGGRO"]:
 				pos_dist = position.distance_to(player.global_position)	
-				if pos_dist > 3:
+				if pos_dist > 5:
 					move_direction = (player.global_position - self.global_position).normalized()
 					velocity = move_direction * move_speed
 					move_and_slide()

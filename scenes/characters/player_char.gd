@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 @export var move_speed : float = 100
 @export var attack_speed : float = 1000
-@export var hp : float = 100
 #@export var starting_direction : Vector2 = Vector2(0,1)
 
 var last_velocity := Vector2.ZERO
@@ -16,9 +15,14 @@ var skill1_last_time : int = 0
 @onready var animation_tree := $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
 @onready var fireball := preload("res://scenes/skills/fireball.tscn")
+@onready var healthbar := get_tree().get_root().get_node("GameLevel/HUD/HealthBar")
+@onready var tot_hp : float = 100
+@onready var cur_hp := tot_hp
 
 func _ready():
 	click_position = position
+	healthbar.max_value = tot_hp
+	healthbar.value = cur_hp
 	#animation_tree.set("parameters/Idle/blend_position", starting_direction)
 	
 func _physics_process(_delta):
