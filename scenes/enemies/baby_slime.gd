@@ -89,7 +89,6 @@ func _on_player_detector_body_exited(body: Node2D) -> void:
 
 func hit(damage: float) -> void:
 	cur_hp -= damage
-	
 	health_bar.value = cur_hp
 	damage_bar_timer.start(damage_bar_delay)
 	if(!health_bar.visible):

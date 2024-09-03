@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4dcx8ompxlku"]
+[gd_scene load_steps=10 format=3 uid="uid://b4dcx8ompxlku"]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy_spawner.gd" id="1_p7647"]
 [ext_resource type="PackedScene" uid="uid://dk84rhdogwg2j" path="res://scenes/characters/slime_character.tscn" id="1_u4ltj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bxh2ctf0htioa" path="res://scenes/test_base_layer.tscn" id="2_oy2iv"]
 [ext_resource type="PackedScene" uid="uid://bnovo4dummyvg" path="res://scenes/enemies/baby_slime.tscn" id="4_qyr7a"]
 [ext_resource type="PackedScene" uid="uid://bcql7tuubulva" path="res://scenes/enemies/enemy_spawner.tscn" id="6_ydg56"]
+[ext_resource type="PackedScene" uid="uid://j060qriw6yvt" path="res://scenes/enemies/swordsman.tscn" id="7_07vw4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpcnw"]
 size = Vector2(2005, 64)
@@ -42,6 +43,11 @@ position = Vector2(-440, -305)
 position = Vector2(292, 177)
 
 [node name="BabySlime" parent="Actors/EnemyActors" groups=["Monster"] instance=ExtResource("4_qyr7a")]
+
+[node name="Swordsman" parent="Actors/EnemyActors" instance=ExtResource("7_07vw4")]
+position = Vector2(-148, -58)
+rotation = 3.14159
+scale = Vector2(1, -1)
 
 [node name="SlimeCharacter" parent="Actors" instance=ExtResource("1_u4ltj")]
 position = Vector2(107, 70)

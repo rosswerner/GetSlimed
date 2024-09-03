@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/enemies/swordsman.gd" id="1_gbvb6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2qug"]
-size = Vector2(13, 11)
+size = Vector2(13, 15)
 
 [sub_resource type="Animation" id="Animation_7oae5"]
 length = 0.001
@@ -19,6 +19,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_syj8w"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.533333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [54, 55, 56]
 }
 
 [sub_resource type="Animation" id="Animation_yw7oj"]
@@ -89,6 +104,54 @@ tracks/0/keys = {
 "values": [12, 13, 14, 15, 16, 17]
 }
 
+[sub_resource type="Animation" id="Animation_f4npv"]
+resource_name = "slash_down"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 39]
+}
+
+[sub_resource type="Animation" id="Animation_lmw5u"]
+resource_name = "slash_right"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [42, 43, 44, 45]
+}
+
+[sub_resource type="Animation" id="Animation_r2wk5"]
+resource_name = "slash_up"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [48, 49, 50, 51]
+}
+
 [sub_resource type="Animation" id="Animation_sa5fr"]
 resource_name = "walk_down"
 length = 1.4
@@ -155,74 +218,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [30, 31, 32, 33, 34, 35]
-}
-
-[sub_resource type="Animation" id="Animation_f4npv"]
-resource_name = "slash_down"
-length = 0.3
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [36, 37, 38, 39]
-}
-
-[sub_resource type="Animation" id="Animation_lmw5u"]
-resource_name = "slash_right"
-length = 0.3
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [42, 43, 44, 45]
-}
-
-[sub_resource type="Animation" id="Animation_r2wk5"]
-resource_name = "slash_up"
-length = 0.3
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [48, 49, 50, 51]
-}
-
-[sub_resource type="Animation" id="Animation_syj8w"]
-resource_name = "death"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.266667, 0.533333),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [54, 55, 56]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lnp46"]
@@ -376,16 +371,19 @@ graph_offset = Vector2(-94, -18)
 [sub_resource type="CircleShape2D" id="CircleShape2D_fbj0v"]
 radius = 132.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fpjom"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s48id"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6g82e"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p0xbs"]
 bg_color = Color(0.910222, 0.038437, 0.175216, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_161qi"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mv5f5"]
 bg_color = Color(1, 0.850934, 0.83593, 1)
 
 [node name="Swordsman" type="CharacterBody2D" groups=["Monster"]]
+z_index = 1
+y_sort_enabled = true
 scale = Vector2(-1, 1)
+platform_floor_layers = 0
 script = ExtResource("1_gbvb6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -394,8 +392,8 @@ texture = ExtResource("1_5uwlx")
 hframes = 6
 vframes = 10
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 13.5)
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(-0.499995, 11.5)
 rotation = -3.14159
 scale = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_c2qug")
@@ -418,15 +416,17 @@ parameters/Walk/blend_position = Vector2(0.27451, 0.0666666)
 [node name="PlayerDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" groups=["Monster"]]
+position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_fbj0v")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -10.0
-offset_top = -10.0
+offset_top = -16.0
 offset_right = 10.0
-offset_bottom = -6.0
-theme_override_styles/background = SubResource("StyleBoxEmpty_fpjom")
-theme_override_styles/fill = SubResource("StyleBoxFlat_6g82e")
+offset_bottom = -12.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_s48id")
+theme_override_styles/fill = SubResource("StyleBoxFlat_p0xbs")
+fill_mode = 1
 show_percentage = false
 
 [node name="DamageBar" type="ProgressBar" parent="HealthBar"]
@@ -434,7 +434,14 @@ show_behind_parent = true
 layout_mode = 0
 offset_right = 20.0
 offset_bottom = 4.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_161qi")
+theme_override_styles/fill = SubResource("StyleBoxFlat_mv5f5")
+fill_mode = 1
 show_percentage = false
 
 [node name="DamageBarTimer" type="Timer" parent="HealthBar/DamageBar"]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
+[connection signal="body_entered" from="PlayerDetector" to="." method="_on_player_detector_body_entered"]
+[connection signal="body_exited" from="PlayerDetector" to="." method="_on_player_detector_body_exited"]
+[connection signal="timeout" from="HealthBar/DamageBar/DamageBarTimer" to="." method="_on_damage_bar_timer_timeout"]
