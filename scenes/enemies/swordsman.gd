@@ -46,10 +46,12 @@ func _physics_process(_delta):
 				move_and_slide()
 			Swordsman_State["AGGRO"]:
 				pos_dist = position.distance_to(player.global_position)	
-				if pos_dist > 5:
+				if pos_dist > 10:
 					move_direction = (player.global_position - self.global_position).normalized()
 					velocity = move_direction * move_speed
 					move_and_slide()
+				else:
+					current_state = Swordsman_State.ATTACK
 			Swordsman_State["ATTACK"]:
 				velocity = Vector2(0,0)
 			Swordsman_State["DEATH"]:
@@ -114,7 +116,6 @@ func die() -> void:
 	state_machine.travel("Death")
 	
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
-	print(anim_name)
 	if(anim_name == "death"):
 		queue_free()
 

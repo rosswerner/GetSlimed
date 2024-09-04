@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bytf0u1u6tsjx"]
+[gd_scene load_steps=22 format=3 uid="uid://bytf0u1u6tsjx"]
 
 [ext_resource type="Script" path="res://scenes/skills/fireball.gd" id="1_8ejp7"]
 [ext_resource type="Texture2D" uid="uid://btpb11cmt7fve" path="res://assets/sprites/skills/fireball.png" id="1_tybvm"]
@@ -38,22 +38,88 @@ tracks/0/keys = {
 "values": [31, 32, 33, 34]
 }
 
+[sub_resource type="Animation" id="Animation_484wm"]
+resource_name = "explode"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19, 20]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rgxby"]
 _data = {
 "RESET": SubResource("Animation_b5gdg"),
+"explode": SubResource("Animation_484wm"),
 "shoot": SubResource("Animation_31vj8")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_p1dpn"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ylcy2"]
+animation = &"explode"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4xomd"]
+animation = &"explode"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0642a"]
+animation = &"explode"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wk21h"]
+animation = &"explode"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ydgvq"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_ylcy2")
+blend_point_0/pos = Vector2(1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_4xomd")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_0642a")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_wk21h")
+blend_point_3/pos = Vector2(0, 1)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jb35n"]
 animation = &"shoot"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_fcaro"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ddet4"]
+animation = &"shoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_45p4j"]
+animation = &"shoot"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j2ijt"]
+animation = &"shoot"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_7xckm"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_jb35n")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_ddet4")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_45p4j")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_j2ijt")
+blend_point_3/pos = Vector2(1, 0)
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_0u447"]
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_djab6"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_mc1y6"]
-states/shoot/node = SubResource("AnimationNodeAnimation_p1dpn")
-states/shoot/position = Vector2(379, 100)
-transitions = ["Start", "shoot", SubResource("AnimationNodeStateMachineTransition_fcaro")]
+states/Explode/node = SubResource("AnimationNodeBlendSpace2D_ydgvq")
+states/Explode/position = Vector2(503, 100)
+states/Shoot/node = SubResource("AnimationNodeBlendSpace2D_7xckm")
+states/Shoot/position = Vector2(353, 100)
+transitions = ["Start", "Shoot", SubResource("AnimationNodeStateMachineTransition_0u447"), "Shoot", "Explode", SubResource("AnimationNodeStateMachineTransition_djab6")]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cn7o1"]
+radius = 11.0
 
 [node name="Fireball" type="Area2D" groups=["Projectile"]]
 z_index = 1
@@ -68,7 +134,7 @@ hframes = 14
 vframes = 3
 frame = 31
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="ShootCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 2)
 shape = SubResource("CircleShape2D_mr4nd")
 
@@ -80,8 +146,18 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_mc1y6")
 anim_player = NodePath("../AnimationPlayer")
+parameters/Explode/blend_position = Vector2(0, 0)
+parameters/Shoot/blend_position = Vector2(0.00674534, -0.010101)
 
 [node name="Duration" type="Timer" parent="."]
 
+[node name="ExplosionArea" type="Area2D" parent="."]
+
+[node name="ExplosionCollision" type="CollisionShape2D" parent="ExplosionArea"]
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_cn7o1")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimationTree" to="." method="_on_animation_tree_animation_finished"]
 [connection signal="timeout" from="Duration" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="ExplosionArea" to="." method="_on_explosion_area_body_entered"]

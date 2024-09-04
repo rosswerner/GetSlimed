@@ -15,14 +15,15 @@ var skill1_last_time : int = 0
 @onready var animation_tree := $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
 @onready var fireball := preload("res://scenes/skills/fireball.tscn")
-@onready var healthbar := get_tree().get_root().get_node("GameLevel/HUD/HealthBar")
+@onready var health_bar := get_tree().get_root().get_node("GameLevel/HUD/HealthBar")
 @onready var tot_hp : float = 100
 @onready var cur_hp := tot_hp
+@onready var hitbox := $Hitbox
 
 func _ready():
 	click_position = position
-	healthbar.max_value = tot_hp
-	healthbar.value = cur_hp
+	health_bar.max_value = tot_hp
+	health_bar.value = cur_hp
 	#animation_tree.set("parameters/Idle/blend_position", starting_direction)
 	
 func _physics_process(_delta):
@@ -67,6 +68,27 @@ func pick_new_state():
 		state_machine.travel("Walk")
 	else:
 		state_machine.travel("Idle")
+		
+func hit(damage: float) -> void:
+	if(cur_hp > 0):
+		cur_hp -= damage
+		health_bar.value = cur_hp
+		#damage_bar_timer.start(damage_bar_delay)
+		#current_state = Swordsman_State.AGGRO
+		
+		if(!health_bar.visible):
+			health_bar.visible = true
+			#damage_bar.visible = true
+	if(cur_hp <= 0):# and current_state != Swordsman_State.DEATH):
+		die()
+		
+func die() -> void:
+	hitbox.set_deferred("disabled", true)
+	velocity = Vector2.ZERO
+	animation_tree.set("parameters/Death/blend_position", velocity)
+	health_bar.visible = false
+	#damage_bar.visible = false
+	state_machine.travel("Death")
 		
 func fireball_skill() -> void:
 	var fireball_tmp := fireball.instantiate()

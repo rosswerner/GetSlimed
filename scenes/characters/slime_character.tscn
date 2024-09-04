@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dk84rhdogwg2j"]
+[gd_scene load_steps=34 format=3 uid="uid://dk84rhdogwg2j"]
 
 [ext_resource type="Script" path="res://scenes/characters/player_char.gd" id="1_j1ge7"]
 [ext_resource type="Texture2D" uid="uid://bgfpaqk2x002h" path="res://assets/sprites/characters/slime.png" id="2_mtw4n"]
@@ -121,9 +121,26 @@ tracks/0/keys = {
 "values": [35, 36, 37, 38, 39, 40]
 }
 
+[sub_resource type="Animation" id="Animation_ngj0c"]
+resource_name = "death"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.333333, 0.5, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [84, 85, 86, 87, 88]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vdfo6"]
 _data = {
 "RESET": SubResource("Animation_ekwea"),
+"death": SubResource("Animation_ngj0c"),
 "idle_down": SubResource("Animation_7p4ig"),
 "idle_right": SubResource("Animation_ko0ka"),
 "idle_up": SubResource("Animation_r22y6"),
@@ -131,6 +148,28 @@ _data = {
 "walk_right": SubResource("Animation_pk8ic"),
 "walk_up": SubResource("Animation_qmkm4")
 }
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xve2w"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_md3us"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wo7hd"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_f0fat"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ymuri"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_xve2w")
+blend_point_0/pos = Vector2(0, 1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_md3us")
+blend_point_1/pos = Vector2(0, -1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_wo7hd")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_f0fat")
+blend_point_3/pos = Vector2(-1, 0)
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8l310"]
 animation = &"idle_down"
@@ -189,12 +228,19 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_n7f8f"]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4oowb"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q1scf"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vaxnp"]
+states/Death/node = SubResource("AnimationNodeBlendSpace2D_ymuri")
+states/Death/position = Vector2(439, 16)
 states/Idle/node = SubResource("AnimationNodeBlendSpace2D_o4de5")
 states/Idle/position = Vector2(347, 100)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_1j6rn")
 states/Walk/position = Vector2(537, 100)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_dhipg"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_3pu5m"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_n7f8f")]
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_dhipg"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_3pu5m"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_n7f8f"), "Idle", "Death", SubResource("AnimationNodeStateMachineTransition_4oowb"), "Walk", "Death", SubResource("AnimationNodeStateMachineTransition_q1scf")]
+graph_offset = Vector2(-54, -40)
 
 [node name="SlimeCharacter" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
@@ -207,7 +253,7 @@ texture = ExtResource("2_mtw4n")
 hframes = 7
 vframes = 13
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Hitbox" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_xixrg")
@@ -220,5 +266,6 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_vaxnp")
 anim_player = NodePath("../AnimationPlayer")
+parameters/Death/blend_position = Vector2(-0.00337267, 0.979798)
 parameters/Idle/blend_position = Vector2(0.005059, 1.14848)
 parameters/Walk/blend_position = Vector2(-0.0809444, -0.298305)
