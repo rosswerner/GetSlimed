@@ -10,6 +10,7 @@ var target_position := Vector2()
 var mouse_position := Vector2()
 var pos_dist : float = 0.0
 var skill1_last_time : int = 0
+var dead := false
 
 #@export var attack_velocity : Vector2
 @onready var animation_tree := $AnimationTree
@@ -27,36 +28,38 @@ func _ready():
 	#animation_tree.set("parameters/Idle/blend_position", starting_direction)
 	
 func _physics_process(_delta):
-	mouse_position = get_global_mouse_position()
-	if Input.is_action_pressed("Left_Click"):
-		click_position = mouse_position
-	if Input.is_action_pressed("Skill1"):
-		fireball_skill()
+	if(!dead):
+		mouse_position = get_global_mouse_position()
+		if Input.is_action_pressed("Left_Click"):
+			click_position = mouse_position
+		if Input.is_action_pressed("Skill1"):
+			fireball_skill()
+			
+		pos_dist = position.distance_to(click_position)	
+		if pos_dist > 3:
+			target_position = (click_position - position).normalized()
+			var vel := position.direction_to(click_position) * move_speed
+			velocity = vel
+			last_velocity = velocity
+			move_and_slide()
+		else:
+			pos_dist = 0
+			velocity = Vector2(0,0)
+			move_and_slide()
 		
-	pos_dist = position.distance_to(click_position)	
-	if pos_dist > 3:
-		target_position = (click_position - position).normalized()
-		var vel := position.direction_to(click_position) * move_speed
-		velocity = vel
-		last_velocity = velocity
-		move_and_slide()
-	else:
-		pos_dist = 0
-		velocity = Vector2(0,0)
-		move_and_slide()
-	
-	update_animation_parameters(target_position)
-	
-	if last_velocity.x < 0:
-		$Sprite2D.flip_h = true
-	else:
-		$Sprite2D.flip_h = false
-	
-	pick_new_state()
-	#print("position = " + str(position))
-	#print("mposition = " + str(click_position))
-	#print("velocity = " + str(velocity))
-	#print("posdist = " + str(pos_dist))
+		if(!dead):
+			update_animation_parameters(target_position)
+			pick_new_state()
+		
+		if last_velocity.x < 0:
+			$Sprite2D.flip_h = true
+		else:
+			$Sprite2D.flip_h = false
+		
+		#print("position = " + str(position))
+		#print("mposition = " + str(click_position))
+		#print("velocity = " + str(velocity))
+		#print("posdist = " + str(pos_dist))
 	
 func update_animation_parameters(move_input : Vector2):
 	if(move_input != Vector2.ZERO):
@@ -83,12 +86,14 @@ func hit(damage: float) -> void:
 		die()
 		
 func die() -> void:
-	hitbox.set_deferred("disabled", true)
-	velocity = Vector2.ZERO
-	animation_tree.set("parameters/Death/blend_position", velocity)
-	health_bar.visible = false
-	#damage_bar.visible = false
+	dead = true
 	state_machine.travel("Death")
+	hitbox.set_deferred("disabled", true)
+	#animation_tree.set("parameters/death/blend_position", velocity)
+	velocity = Vector2.ZERO
+	health_bar.visible = false
+	print("ded")
+	#damage_bar.visible = false
 		
 func fireball_skill() -> void:
 	var fireball_tmp := fireball.instantiate()
@@ -100,3 +105,7 @@ func fireball_skill() -> void:
 		fireball_tmp.direction = shoot_target
 		#this is to make the proj not be affected by the player's movements
 		get_tree().get_root().add_child(fireball_tmp)
+
+func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
+	if(anim_name == "death"):
+		queue_free()

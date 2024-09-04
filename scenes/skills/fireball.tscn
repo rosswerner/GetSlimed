@@ -21,6 +21,22 @@ tracks/0/keys = {
 "values": [31]
 }
 
+[sub_resource type="Animation" id="Animation_484wm"]
+resource_name = "explode"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17, 18, 19, 20]
+}
+
 [sub_resource type="Animation" id="Animation_31vj8"]
 resource_name = "shoot"
 length = 0.25
@@ -36,22 +52,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [31, 32, 33, 34]
-}
-
-[sub_resource type="Animation" id="Animation_484wm"]
-resource_name = "explode"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.0666667, 0.133333, 0.2, 0.266667, 0.333333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [14, 15, 16, 17, 18, 19, 20]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rgxby"]

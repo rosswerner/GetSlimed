@@ -8,6 +8,7 @@ enum Swordsman_State { IDLE, WALK, ATTACK, AGGRO, DEATH }
 @export var post_aggro_time : float = 1.5
 @export var tot_hp : float = 10
 @export var cur_hp : float = tot_hp
+@export var slash_damage : float = 10.0
 #@export var player : CharacterBody2D
 
 @onready var animation_tree = $AnimationTree
@@ -23,6 +24,7 @@ enum Swordsman_State { IDLE, WALK, ATTACK, AGGRO, DEATH }
 var move_direction : Vector2 = Vector2.ZERO
 var current_state : Swordsman_State = Swordsman_State.IDLE
 var player_detected : bool = false
+var player_hittable : bool = false
 var damage_bar_delay : float = .5
 var pos_dist : float = 0.0
 
@@ -46,7 +48,7 @@ func _physics_process(_delta):
 				move_and_slide()
 			Swordsman_State["AGGRO"]:
 				pos_dist = position.distance_to(player.global_position)	
-				if pos_dist > 10:
+				if !player_hittable and pos_dist > 3:
 					move_direction = (player.global_position - self.global_position).normalized()
 					velocity = move_direction * move_speed
 					move_and_slide()
@@ -54,6 +56,7 @@ func _physics_process(_delta):
 					current_state = Swordsman_State.ATTACK
 			Swordsman_State["ATTACK"]:
 				velocity = Vector2(0,0)
+				state_machine.travel("Attack")
 			Swordsman_State["DEATH"]:
 				velocity = Vector2(0,0)
 			
@@ -85,14 +88,25 @@ func _on_timer_timeout() -> void:
 	pick_new_state()
 
 func _on_player_detector_body_entered(body: Node2D) -> void:
-	if(body.is_in_group("Player")):
+	if(body.is_in_group("Player") and !(cur_hp <=0)):
 		player_detected = true
 		current_state = Swordsman_State.AGGRO
 
 func _on_player_detector_body_exited(body: Node2D) -> void:
-	if(body.is_in_group("Player")):
+	if(body.is_in_group("Player") and !(cur_hp <=0)):
 		player_detected = false
 		pick_new_state()
+		
+func _on_attack_player_detector_body_entered(body: Node2D) -> void:
+	if(body.is_in_group("Player") and !(cur_hp <=0)):
+		player_hittable = true
+		current_state = Swordsman_State.ATTACK
+		body.hit(slash_damage)
+
+func _on_attack_player_detector_body_exited(body: Node2D) -> void:
+	if(body.is_in_group("Player") and !(cur_hp <=0)):
+		player_hittable = false
+		current_state = Swordsman_State.AGGRO
 
 func hit(damage: float) -> void:
 	if(cur_hp > 0):
@@ -118,6 +132,10 @@ func die() -> void:
 func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
 	if(anim_name == "death"):
 		queue_free()
+	elif("slash" in anim_name and !(cur_hp <=0)):
+		state_machine.travel("Walk")
+		current_state = Swordsman_State.AGGRO
+		player.hit(slash_damage)
 
 func _on_damage_bar_timer_timeout() -> void:
 	damage_bar.value = cur_hp

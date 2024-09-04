@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bcql7tuubulva" path="res://scenes/enemies/enemy_spawner.tscn" id="6_ydg56"]
 [ext_resource type="PackedScene" uid="uid://j060qriw6yvt" path="res://scenes/enemies/swordsman.tscn" id="7_07vw4"]
 [ext_resource type="Script" path="res://scenes/hud.gd" id="7_wgr5f"]
-[ext_resource type="Texture2D" uid="uid://b8rcexp6ysl3i" path="res://assets/sprites/gui/healthmana.png" id="8_6tn63"]
+[ext_resource type="Texture2D" uid="uid://dn1a1hojef11t" path="res://assets/sprites/gui/RedDragon.png" id="8_ifkl7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpcnw"]
 size = Vector2(2005, 64)
@@ -28,6 +28,7 @@ position = Vector2(440, 305)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-333, -235)
+zoom = Vector2(0.8, 0.8)
 limit_left = 0
 limit_top = 0
 limit_right = 2000
@@ -52,7 +53,7 @@ position = Vector2(292, 177)
 [node name="BabySlime" parent="Actors/EnemyActors" groups=["Monster"] instance=ExtResource("4_qyr7a")]
 
 [node name="Swordsman" parent="Actors/EnemyActors" instance=ExtResource("7_07vw4")]
-position = Vector2(-148, -58)
+position = Vector2(328, 15)
 rotation = 3.14159
 scale = Vector2(1, -1)
 
@@ -96,17 +97,19 @@ script = ExtResource("7_wgr5f")
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -60.0
-offset_right = 60.0
+offset_left = 41.0
+offset_top = -82.0
+offset_right = 120.0
 grow_vertical = 0
 theme = SubResource("Theme_ttibf")
 theme_override_styles/background = SubResource("StyleBoxEmpty_a3qq8")
 theme_override_styles/fill = SubResource("StyleBoxFlat_4glax")
+fill_mode = 3
 show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="HUD"]
 top_level = true
 z_index = 1
-position = Vector2(30, 294)
-scale = Vector2(2, 2)
-texture = ExtResource("8_6tn63")
+position = Vector2(86, 220)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_ifkl7")
