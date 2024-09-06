@@ -1,6 +1,6 @@
 [gd_scene load_steps=54 format=3 uid="uid://j060qriw6yvt"]
 
-[ext_resource type="Texture2D" uid="uid://gx8j5vexegyx" path="res://assets/sprites/characters/player.png" id="1_5uwlx"]
+[ext_resource type="Texture2D" uid="uid://gx8j5vexegyx" path="res://assets/characters/player.png" id="1_5uwlx"]
 [ext_resource type="Script" path="res://scenes/enemies/swordsman.gd" id="1_gbvb6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2qug"]

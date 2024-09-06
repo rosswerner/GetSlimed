@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bnovo4dummyvg"]
 
 [ext_resource type="Script" path="res://scenes/enemies/baby_slime.gd" id="1_tjnqk"]
-[ext_resource type="Texture2D" uid="uid://bfknxrala6hoc" path="res://assets/sprites/characters/baby_slime.png" id="2_fwte5"]
+[ext_resource type="Texture2D" uid="uid://bfknxrala6hoc" path="res://assets/characters/baby_slime.png" id="2_fwte5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g5aqc"]
 

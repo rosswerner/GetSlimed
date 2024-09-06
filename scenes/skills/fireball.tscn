@@ -1,7 +1,7 @@
 [gd_scene load_steps=22 format=3 uid="uid://bytf0u1u6tsjx"]
 
 [ext_resource type="Script" path="res://scenes/skills/fireball.gd" id="1_8ejp7"]
-[ext_resource type="Texture2D" uid="uid://btpb11cmt7fve" path="res://assets/sprites/skills/fireball.png" id="1_tybvm"]
+[ext_resource type="Texture2D" uid="uid://btpb11cmt7fve" path="res://assets/skills/fireball.png" id="1_tybvm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mr4nd"]
 radius = 5.09902

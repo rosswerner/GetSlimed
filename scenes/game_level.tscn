@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bcql7tuubulva" path="res://scenes/enemies/enemy_spawner.tscn" id="6_ydg56"]
 [ext_resource type="PackedScene" uid="uid://j060qriw6yvt" path="res://scenes/enemies/swordsman.tscn" id="7_07vw4"]
 [ext_resource type="Script" path="res://scenes/hud.gd" id="7_wgr5f"]
-[ext_resource type="Texture2D" uid="uid://dn1a1hojef11t" path="res://assets/sprites/gui/RedDragon.png" id="8_ifkl7"]
+[ext_resource type="Texture2D" uid="uid://dn1a1hojef11t" path="res://assets/gui/RedDragon.png" id="8_ifkl7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gpcnw"]
 size = Vector2(2005, 64)
