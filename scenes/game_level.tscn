@@ -9,18 +9,18 @@
 [ext_resource type="Script" path="res://scenes/hud.gd" id="7_wgr5f"]
 [ext_resource type="Texture2D" uid="uid://dn1a1hojef11t" path="res://assets/gui/RedDragon.png" id="8_ifkl7"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpcnw"]
-size = Vector2(2005, 64)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ti0m"]
-size = Vector2(112, 1008)
-
 [sub_resource type="Theme" id="Theme_ttibf"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a3qq8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4glax"]
 bg_color = Color(0.82809, 0, 0.0513083, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpcnw"]
+size = Vector2(2005, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ti0m"]
+size = Vector2(112, 1008)
 
 [node name="GameLevel" type="Node2D"]
 y_sort_enabled = true
@@ -65,6 +65,30 @@ z_index = 1
 y_sort_enabled = true
 remote_path = NodePath("../../../Camera2D")
 
+[node name="HUD" type="CanvasLayer" parent="Actors/SlimeCharacter"]
+script = ExtResource("7_wgr5f")
+
+[node name="HealthBar" type="ProgressBar" parent="Actors/SlimeCharacter/HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 41.0
+offset_top = -82.0
+offset_right = 120.0
+grow_vertical = 0
+theme = SubResource("Theme_ttibf")
+theme_override_styles/background = SubResource("StyleBoxEmpty_a3qq8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_4glax")
+fill_mode = 3
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Actors/SlimeCharacter/HUD"]
+top_level = true
+z_index = 1
+position = Vector2(86, 220)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("8_ifkl7")
+
 [node name="EnemySpawner" parent="." groups=["Monster"] instance=ExtResource("6_ydg56")]
 top_level = true
 y_sort_enabled = true
@@ -89,27 +113,3 @@ shape = SubResource("RectangleShape2D_5ti0m")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1628, 189)
 shape = SubResource("RectangleShape2D_5ti0m")
-
-[node name="HUD" type="CanvasLayer" parent="."]
-script = ExtResource("7_wgr5f")
-
-[node name="HealthBar" type="ProgressBar" parent="HUD"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 41.0
-offset_top = -82.0
-offset_right = 120.0
-grow_vertical = 0
-theme = SubResource("Theme_ttibf")
-theme_override_styles/background = SubResource("StyleBoxEmpty_a3qq8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_4glax")
-fill_mode = 3
-show_percentage = false
-
-[node name="Sprite2D" type="Sprite2D" parent="HUD"]
-top_level = true
-z_index = 1
-position = Vector2(86, 220)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("8_ifkl7")

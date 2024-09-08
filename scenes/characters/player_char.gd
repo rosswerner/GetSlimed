@@ -16,8 +16,8 @@ var dead := false
 @onready var animation_tree := $AnimationTree
 @onready var state_machine = animation_tree.get("parameters/playback")
 @onready var fireball := preload("res://scenes/skills/fireball.tscn")
-@onready var health_bar := get_tree().get_root().get_node("GameLevel/HUD/HealthBar")
-@onready var tot_hp : float = 100
+@onready var health_bar := get_node("HUD/HealthBar")
+@onready var tot_hp : float = 100000
 @onready var cur_hp := tot_hp
 @onready var hitbox := $Hitbox
 
@@ -36,7 +36,7 @@ func _physics_process(_delta):
 			fireball_skill()
 			
 		pos_dist = position.distance_to(click_position)	
-		if pos_dist > 3:
+		if pos_dist > 4:
 			target_position = (click_position - position).normalized()
 			var vel := position.direction_to(click_position) * move_speed
 			velocity = vel

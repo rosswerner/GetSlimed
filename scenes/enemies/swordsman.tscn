@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scenes/enemies/swordsman.gd" id="1_gbvb6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c2qug"]
-size = Vector2(13, 15)
+size = Vector2(11, 12)
 
 [sub_resource type="Animation" id="Animation_7oae5"]
 length = 0.001
@@ -397,7 +397,7 @@ hframes = 6
 vframes = 10
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(-0.499995, 11.5)
+position = Vector2(-0.5, 10)
 rotation = -3.14159
 scale = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_c2qug")
@@ -426,7 +426,7 @@ shape = SubResource("CircleShape2D_fbj0v")
 [node name="AttackPlayerDetector" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPlayerDetector"]
-position = Vector2(-1, 11)
+position = Vector2(0, 11)
 shape = SubResource("CapsuleShape2D_csw5d")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
