@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://bxh2ctf0htioa" path="res://scenes/test_base_layer.tscn" id="2_oy2iv"]
 [ext_resource type="PackedScene" uid="uid://bnovo4dummyvg" path="res://scenes/enemies/baby_slime.tscn" id="4_qyr7a"]
 [ext_resource type="PackedScene" uid="uid://bcql7tuubulva" path="res://scenes/enemies/enemy_spawner.tscn" id="6_ydg56"]
+[ext_resource type="Texture2D" uid="uid://borclc8mq70g7" path="res://assets/gui/PlayerHealthSkeleton.png" id="7_6h6eq"]
 [ext_resource type="PackedScene" uid="uid://j060qriw6yvt" path="res://scenes/enemies/swordsman.tscn" id="7_07vw4"]
 [ext_resource type="Script" path="res://scenes/hud.gd" id="7_wgr5f"]
-[ext_resource type="Texture2D" uid="uid://dn1a1hojef11t" path="res://assets/gui/RedDragon.png" id="8_ifkl7"]
 
 [sub_resource type="Theme" id="Theme_ttibf"]
 
@@ -72,9 +72,10 @@ script = ExtResource("7_wgr5f")
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 41.0
-offset_top = -82.0
-offset_right = 120.0
+offset_left = 1.0
+offset_top = -95.0
+offset_right = 91.0
+offset_bottom = -5.0
 grow_vertical = 0
 theme = SubResource("Theme_ttibf")
 theme_override_styles/background = SubResource("StyleBoxEmpty_a3qq8")
@@ -85,9 +86,9 @@ show_percentage = false
 [node name="Sprite2D" type="Sprite2D" parent="Actors/SlimeCharacter/HUD"]
 top_level = true
 z_index = 1
-position = Vector2(86, 220)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("8_ifkl7")
+position = Vector2(46, 271)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_6h6eq")
 
 [node name="EnemySpawner" parent="." groups=["Monster"] instance=ExtResource("6_ydg56")]
 top_level = true

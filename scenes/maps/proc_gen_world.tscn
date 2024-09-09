@@ -1,13 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://gv0vubsas5wo"]
+[gd_scene load_steps=14 format=3 uid="uid://gv0vubsas5wo"]
 
 [ext_resource type="Script" path="res://scenes/maps/proc_gen_world.gd" id="1_0pslv"]
 [ext_resource type="Texture2D" uid="uid://5fafnlp58y33" path="res://assets/Paradise_Asset_Pack_FREE/Paradise_Asset_Pack_FREE/FOR_TUTORIAL/tilemap1.png" id="2_eakmh"]
+[ext_resource type="Script" path="res://scenes/maps/camera_2d.gd" id="2_gj8lt"]
 [ext_resource type="PackedScene" uid="uid://dk84rhdogwg2j" path="res://scenes/characters/slime_character.tscn" id="3_bfu8y"]
 [ext_resource type="Script" path="res://scenes/hud.gd" id="4_87r5k"]
-[ext_resource type="Texture2D" uid="uid://dn1a1hojef11t" path="res://assets/gui/RedDragon.png" id="5_v4gmp"]
+[ext_resource type="Texture2D" uid="uid://borclc8mq70g7" path="res://assets/gui/PlayerHealthSkeleton.png" id="5_eq21w"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1otml"]
-frequency = 0.0008
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qqaml"]
 noise = SubResource("FastNoiseLite_1otml")
@@ -1915,11 +1915,11 @@ terrain_set_0/terrain_4/name = "grass_on_sand"
 terrain_set_0/terrain_4/color = Color(0.917647, 0.501961, 0.858824, 1)
 sources/0 = SubResource("TileSetAtlasSource_b7i7x")
 
-[sub_resource type="Theme" id="Theme_t1ouq"]
+[sub_resource type="Theme" id="Theme_vdpst"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qxu2n"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0aoyd"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ep0ld"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qx88y"]
 bg_color = Color(0.82809, 0, 0.0513083, 1)
 
 [node name="ProcGenWorld" type="Node2D"]
@@ -1930,6 +1930,7 @@ noise_height_text = SubResource("NoiseTexture2D_qqaml")
 position = Vector2(107, 70)
 zoom = Vector2(0.1, 0.1)
 editor_draw_limits = true
+script = ExtResource("2_gj8lt")
 
 [node name="Water" type="TileMapLayer" parent="."]
 z_index = -1
@@ -1969,19 +1970,20 @@ script = ExtResource("4_87r5k")
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 41.0
-offset_top = -82.0
-offset_right = 120.0
+offset_left = 1.0
+offset_top = -95.0
+offset_right = 91.0
+offset_bottom = -5.0
 grow_vertical = 0
-theme = SubResource("Theme_t1ouq")
-theme_override_styles/background = SubResource("StyleBoxEmpty_qxu2n")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ep0ld")
+theme = SubResource("Theme_vdpst")
+theme_override_styles/background = SubResource("StyleBoxEmpty_0aoyd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qx88y")
 fill_mode = 3
 show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="SlimeCharacter/HUD"]
 top_level = true
 z_index = 1
-position = Vector2(86, 220)
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("5_v4gmp")
+position = Vector2(46, 271)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_eq21w")

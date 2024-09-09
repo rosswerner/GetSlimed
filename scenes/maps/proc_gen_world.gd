@@ -3,8 +3,8 @@ extends Node2D
 @export var noise_height_text : NoiseTexture2D
 
 var noise : Noise
-var width : int = 1000
-var height : int = 1000
+var width : int = 500
+var height : int = 500
 var noise_val_arr = []
 var sand_val_arr : Array[Vector2i] = []
 var grass_val_arr : Array[Vector2i] = []
@@ -37,16 +37,18 @@ func generate_world():
 				#sand
 				if (noise_val >= -0.1):
 					sand_val_arr.append(Vector2i(x,y))
-				#grass
-				if(noise_val >= 0.0):
-					grass_val_arr.append(Vector2i(x,y))
-					if(noise_val >= 0.3):
-						sand1_val_arr.append(Vector2i(x,y))
-				#sand_again
-				if(noise_val >= 0.4):
-					cliff_val_arr.append(Vector2i(x,y))
-					if(noise_val >= 0.53):
-						cliff1_val_arr.append(Vector2i(x,y))
+					#grass
+					if(noise_val >= 0.0):
+						grass_val_arr.append(Vector2i(x,y))
+				
+						#sand_again
+						if(noise_val >= 0.35 and noise_val < .4):
+							sand1_val_arr.append(Vector2i(x,y))
+						#cliffs
+						if(noise_val >= 0.4):
+							cliff_val_arr.append(Vector2i(x,y))
+							if(noise_val >= 0.53):
+								cliff1_val_arr.append(Vector2i(x,y))
 					#sand_layer.set_cell(Vector2i(x,y), source_id, land_atlas)
 				#water
 				#else:
