@@ -1923,12 +1923,13 @@ sources/0 = SubResource("TileSetAtlasSource_b7i7x")
 bg_color = Color(0.82809, 0, 0.0513083, 1)
 
 [node name="ProcGenWorld" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_0pslv")
 noise_height_text = SubResource("NoiseTexture2D_qqaml")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(107, 70)
-zoom = Vector2(0.1, 0.1)
+zoom = Vector2(0.8, 0.8)
 editor_draw_limits = true
 script = ExtResource("2_gj8lt")
 
@@ -1938,20 +1939,25 @@ tile_set = SubResource("TileSet_eklng")
 
 [node name="SandOnWater" type="TileMapLayer" parent="."]
 z_index = -1
+y_sort_enabled = true
 tile_set = SubResource("TileSet_eklng")
 
 [node name="GrassOnSand" type="TileMapLayer" parent="."]
 z_index = -1
+y_sort_enabled = true
 tile_set = SubResource("TileSet_eklng")
 
 [node name="SandOnGrass" type="TileMapLayer" parent="."]
 z_index = -1
+y_sort_enabled = true
 tile_set = SubResource("TileSet_eklng")
 
 [node name="Cliffs" type="TileMapLayer" parent="."]
+y_sort_enabled = true
 tile_set = SubResource("TileSet_eklng")
 
 [node name="Cliffs1" type="TileMapLayer" parent="."]
+y_sort_enabled = true
 tile_set = SubResource("TileSet_eklng")
 
 [node name="SlimeCharacter" parent="." instance=ExtResource("3_bfu8y")]

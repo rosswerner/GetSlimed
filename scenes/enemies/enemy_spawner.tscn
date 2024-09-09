@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bcql7tuubulva"]
+[gd_scene load_steps=7 format=3 uid="uid://bcql7tuubulva"]
 
 [ext_resource type="Script" path="res://scenes/enemies/enemy_spawner.gd" id="1_7fj1s"]
 [ext_resource type="Script" path="res://scenes/enemies/spawn_info.gd" id="2_c4ppu"]
 [ext_resource type="PackedScene" uid="uid://j060qriw6yvt" path="res://scenes/enemies/swordsman.tscn" id="3_lbv3p"]
+[ext_resource type="PackedScene" uid="uid://bnovo4dummyvg" path="res://scenes/enemies/baby_slime.tscn" id="4_pagog"]
 
 [sub_resource type="Resource" id="Resource_6pyk2"]
 script = ExtResource("2_c4ppu")
@@ -12,9 +13,18 @@ enemy = ExtResource("3_lbv3p")
 enemy_num = 1
 enemy_spawn_delay = 1
 
+[sub_resource type="Resource" id="Resource_yd6rl"]
+script = ExtResource("2_c4ppu")
+time_start = 0
+time_end = 60
+enemy = ExtResource("4_pagog")
+enemy_num = 10
+enemy_spawn_delay = 1
+
 [node name="EnemySpawner" type="Node2D"]
+z_index = 1
 script = ExtResource("1_7fj1s")
-spawns = Array[ExtResource("2_c4ppu")]([SubResource("Resource_6pyk2")])
+spawns = Array[ExtResource("2_c4ppu")]([SubResource("Resource_6pyk2"), SubResource("Resource_yd6rl")])
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

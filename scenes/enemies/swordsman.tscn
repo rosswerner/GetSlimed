@@ -391,13 +391,16 @@ platform_floor_layers = 0
 script = ExtResource("1_gbvb6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
 scale = Vector2(-1, 1)
 texture = ExtResource("1_5uwlx")
 hframes = 6
 vframes = 10
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 10)
+z_index = 1
+y_sort_enabled = true
+position = Vector2(-0.499929, -4)
 rotation = -3.14159
 scale = Vector2(1, -1)
 shape = SubResource("RectangleShape2D_c2qug")
@@ -418,12 +421,18 @@ parameters/Walk/blend_position = Vector2(0.27451, 0.0666666)
 [node name="StateTimer" type="Timer" parent="."]
 
 [node name="PlayerDetector" type="Area2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" groups=["Monster"]]
 position = Vector2(-1, 0)
 shape = SubResource("CircleShape2D_fbj0v")
 
 [node name="AttackPlayerDetector" type="Area2D" parent="."]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, -14)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackPlayerDetector"]
 position = Vector2(0, 11)

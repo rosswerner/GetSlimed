@@ -42,8 +42,8 @@ func generate_world():
 						grass_val_arr.append(Vector2i(x,y))
 				
 						#sand_again
-						if(noise_val >= 0.35 and noise_val < .4):
-							sand1_val_arr.append(Vector2i(x,y))
+						#if(noise_val >= 0.35 and noise_val < .4):
+							#sand1_val_arr.append(Vector2i(x,y))
 						#cliffs
 						if(noise_val >= 0.4):
 							cliff_val_arr.append(Vector2i(x,y))
@@ -56,7 +56,7 @@ func generate_world():
 		
 		sand_layer.set_cells_terrain_connect(sand_val_arr,0,2)
 		grass_layer.set_cells_terrain_connect(grass_val_arr,0,4)
-		sand_on_grass_layer.set_cells_terrain_connect(sand1_val_arr,0,0)
+		#sand_on_grass_layer.set_cells_terrain_connect(sand1_val_arr,0,0)
 		cliff_layer.set_cells_terrain_connect(cliff_val_arr,0,3)
 		cliff_layer1.set_cells_terrain_connect(cliff1_val_arr,0,3)
 		
