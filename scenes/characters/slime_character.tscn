@@ -245,6 +245,7 @@ graph_offset = Vector2(-54, -40)
 [node name="SlimeCharacter" type="CharacterBody2D" groups=["Player"]]
 z_index = 1
 y_sort_enabled = true
+position = Vector2(0, -2)
 platform_floor_layers = 4294967280
 script = ExtResource("1_j1ge7")
 

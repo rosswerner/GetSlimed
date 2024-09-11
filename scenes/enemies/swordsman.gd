@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum Swordsman_State { IDLE, WALK, ATTACK, AGGRO, DEATH }
+enum Enemy_State { IDLE, WALK, ATTACK, AGGRO, DEATH }
 
 @export var move_speed : float = 40
 @export var idle_time : float = 3
@@ -22,7 +22,7 @@ enum Swordsman_State { IDLE, WALK, ATTACK, AGGRO, DEATH }
 @onready var player := get_tree().get_first_node_in_group("Player")
 
 var move_direction : Vector2 = Vector2.ZERO
-var current_state : Swordsman_State = Swordsman_State.IDLE
+var current_state : Enemy_State = Enemy_State.IDLE
 var player_detected : bool = false
 var player_hittable : bool = false
 var damage_bar_delay : float = .5
@@ -41,23 +41,23 @@ func _ready():
 func _physics_process(_delta):
 	if is_instance_valid(player):
 		match current_state:
-			Swordsman_State["IDLE"]:
+			Enemy_State["IDLE"]:
 				velocity = Vector2(0,0)
-			Swordsman_State["WALK"]:
+			Enemy_State["WALK"]:
 				velocity = move_direction * move_speed
 				move_and_slide()
-			Swordsman_State["AGGRO"]:
+			Enemy_State["AGGRO"]:
 				pos_dist = position.distance_to(player.global_position)	
 				if !player_hittable and pos_dist > 3:
 					move_direction = (player.global_position - self.global_position).normalized()
 					velocity = move_direction * move_speed
 					move_and_slide()
 				else:
-					current_state = Swordsman_State.ATTACK
-			Swordsman_State["ATTACK"]:
+					current_state = Enemy_State.ATTACK
+			Enemy_State["ATTACK"]:
 				velocity = Vector2(0,0)
 				state_machine.travel("Attack")
-			Swordsman_State["DEATH"]:
+			Enemy_State["DEATH"]:
 				velocity = Vector2(0,0)
 			
 		if(move_direction.x < 0):
@@ -70,17 +70,17 @@ func select_new_direction():
 	
 func pick_new_state():
 	if(!player_detected):
-		if(current_state == Swordsman_State.IDLE ):
+		if(current_state == Enemy_State.IDLE ):
 			state_machine.travel("Walk")
-			current_state = Swordsman_State.WALK
+			current_state = Enemy_State.WALK
 			select_new_direction()
 			state_timer.start(walk_time)
-		elif(current_state == Swordsman_State.WALK):
+		elif(current_state == Enemy_State.WALK):
 			state_machine.travel("Idle")
-			current_state = Swordsman_State.IDLE
+			current_state = Enemy_State.IDLE
 			state_timer.start(idle_time)
-		elif(current_state == Swordsman_State.AGGRO):
-			current_state = Swordsman_State.WALK
+		elif(current_state == Enemy_State.AGGRO):
+			current_state = Enemy_State.WALK
 			select_new_direction()
 			state_timer.start(walk_time + post_aggro_time)
 
@@ -90,7 +90,7 @@ func _on_timer_timeout() -> void:
 func _on_player_detector_body_entered(body: Node2D) -> void:
 	if(body.is_in_group("Player") and !(cur_hp <=0)):
 		player_detected = true
-		current_state = Swordsman_State.AGGRO
+		current_state = Enemy_State.AGGRO
 
 func _on_player_detector_body_exited(body: Node2D) -> void:
 	if(body.is_in_group("Player") and !(cur_hp <=0)):
@@ -100,30 +100,30 @@ func _on_player_detector_body_exited(body: Node2D) -> void:
 func _on_attack_player_detector_body_entered(body: Node2D) -> void:
 	if(body.is_in_group("Player") and !(cur_hp <=0)):
 		player_hittable = true
-		current_state = Swordsman_State.ATTACK
+		current_state = Enemy_State.ATTACK
 		body.hit(slash_damage)
 
 func _on_attack_player_detector_body_exited(body: Node2D) -> void:
 	if(body.is_in_group("Player") and !(cur_hp <=0)):
 		player_hittable = false
-		current_state = Swordsman_State.AGGRO
+		current_state = Enemy_State.AGGRO
 
 func hit(damage: float) -> void:
 	if(cur_hp > 0):
 		cur_hp -= damage
 		health_bar.value = cur_hp
 		damage_bar_timer.start(damage_bar_delay)
-		current_state = Swordsman_State.AGGRO
+		current_state = Enemy_State.AGGRO
 		
 		if(!health_bar.visible):
 			health_bar.visible = true
 			damage_bar.visible = true
-	if(cur_hp <= 0 and current_state != Swordsman_State.DEATH):
+	if(cur_hp <= 0 and current_state != Enemy_State.DEATH):
 		die()
 
 func die() -> void:
 	hitbox.set_deferred("disabled", true)
-	current_state = Swordsman_State.DEATH
+	current_state = Enemy_State.DEATH
 	velocity = Vector2.ZERO
 	health_bar.visible = false
 	damage_bar.visible = false
@@ -134,7 +134,7 @@ func _on_animation_tree_animation_finished(anim_name: StringName) -> void:
 		queue_free()
 	elif("slash" in anim_name and !(cur_hp <=0)):
 		state_machine.travel("Walk")
-		current_state = Swordsman_State.AGGRO
+		current_state = Enemy_State.AGGRO
 		player.hit(slash_damage)
 
 func _on_damage_bar_timer_timeout() -> void:
